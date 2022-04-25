@@ -1,0 +1,90 @@
+.spinner-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 600;
+
+  .img {
+    width: 50px;
+    height: 50px;
+    margin: auto;
+
+    background-image: url(../../../../assets/saksoff_5th_icon.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+
+    animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+
+    // animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    // animation: ld-breath 1s infinite;
+  }
+}
+
+@keyframes lds-heart {
+  0% {
+    transform: scale(0.95);
+  }
+
+  5% {
+    transform: scale(1.1);
+  }
+
+  39% {
+    transform: scale(0.85);
+  }
+
+  45% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+
+@keyframes lds-circle {
+
+  0%,
+  100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(1800deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+
+  100% {
+    transform: rotateY(3600deg);
+  }
+}
+
+@keyframes ld-breath {
+  0% {
+    -webkit-transform: scale(0.86);
+    transform: scale(0.86);
+  }
+
+  50% {
+    -webkit-transform: scale(1.06);
+    transform: scale(1.06);
+  }
+
+  100% {
+    -webkit-transform: scale(0.86);
+    transform: scale(0.86);
+  }
+}

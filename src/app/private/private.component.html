@@ -1,0 +1,7 @@
+<app-sidenav #sidenav>
+  <app-header (toggleSidenav)="sidenav.open()"></app-header>
+
+  <div class="container-fluid container-lg d-flex flex-column flex-fill py-3 position-relative app-continer">
+    <router-outlet></router-outlet>
+  </div>
+</app-sidenav>

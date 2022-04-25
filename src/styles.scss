@@ -1,0 +1,121 @@
+@use '~@angular/material'as mat;
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+// Plus imports for other components in your app.
+@import '~material-community-components/theming';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$saksoff5th-primary: mat.define-palette(mat.$blue-gray-palette);
+$saksoff5th-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$saksoff5th-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$saksoff5th-theme: mat.define-light-theme($saksoff5th-primary, $saksoff5th-accent, $saksoff5th-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($saksoff5th-theme);
+
+// pass angular material theme to material community components
+@include mcc-theme($saksoff5th-theme);
+
+// Boostrap color theming
+$theme-colors: ("primary": #607d8b);
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+html {
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior-y: none;
+
+  body {
+    position: relative;
+    overscroll-behavior-y: none;
+    min-height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #fff;
+
+    app-root,
+    .full-size {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.ng-touched:not(form) {
+  &.ng-invalid {
+    @extend .is-invalid;
+  }
+
+  &.ng-valid {
+    @extend .is-valid;
+  }
+}
+
+.mat-snack-bar-container {
+  &.bg-danger {
+    .mat-simple-snackbar-action {
+      color: #fff;
+
+      .mat-button {
+        background-color: #b32828;
+      }
+    }
+  }
+
+  &.bg-success {
+    .mat-simple-snackbar-action {
+      color: #fff;
+
+      .mat-button {
+        background-color: #308a48;
+      }
+    }
+  }
+
+  &.bg-warning {
+    .mat-simple-snackbar-action {
+      color: #fff;
+
+      .mat-button {
+        background-color: #ff8d00;
+      }
+    }
+  }
+}
+
+.mat-table {
+  border-collapse: separate;
+
+  &.with-borders {
+    border: 1px solid #e0e0e0;
+  }
+}
+
+.mat-dialog-container {
+  transform: translateY(0) !important;
+}
+
+.mat-datepicker-content .mat-calendar {
+  height: auto !important;
+}

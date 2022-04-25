@@ -1,0 +1,25 @@
+<!-- <app-header (toggleSidenav)="sidenav.open()" class="position-sticky" style="top: 0; z-index: 600;"></app-header> -->
+
+<mat-sidenav-container class="full-size">
+  <mat-sidenav class="d-flex flex-column app-sidenav" mode="overlay" #sidenav [autoFocus]="false"
+    [(opened)]="isSidenavOpened">
+    <div class="d-flex flex-column">
+      <mat-toolbar color="primary">
+        <div class="w-100 text-center">
+          <img src="assets/saksoff_5th_logo.png" class="sidenav-brand-image">
+        </div>
+      </mat-toolbar>
+
+      <div class="d-flex flex-column py-3">
+        <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" mat-button
+          class="header-link">Dashboard</a>
+        <a routerLink="/dashboard/section" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }"
+          mat-button class="header-link">Section</a>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="d-flex flex-column full-size">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

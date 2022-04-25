@@ -1,0 +1,33 @@
+.app-sidenav {
+  max-width: 300px;
+  width: 80%;
+  position: fixed;
+  top: 0;
+
+  .sidenav-brand-image {
+    height: 50px;
+    width: auto;
+  }
+
+  .header-link {
+    color: #4a4a4a;
+    background-color: transparent;
+    text-decoration: none;
+    padding: 0px 10px;
+    font-size: 0.85rem;
+    border-radius: 0;
+
+    &~.header-link {
+      margin-bottom: 5px;
+    }
+
+    &.active {
+      background-color: #607d8b;
+      color: #fff;
+    }
+  }
+}
+
+.mat-drawer-container {
+  background-color: #fff;
+}

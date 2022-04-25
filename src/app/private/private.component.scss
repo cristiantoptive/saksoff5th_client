@@ -1,0 +1,14 @@
+app-header {
+  position: fixed;
+  width: 100%;
+  z-index: 700;
+  top: 0;
+}
+
+.app-continer {
+  margin-top: 64px;
+
+  @media screen and (max-width: 599px) {
+    margin-top: 56px;
+  }
+}

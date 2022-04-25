@@ -1,0 +1,25 @@
+.header-brand-image {
+  height: 50px;
+  width: 101px;
+}
+
+.header-right-spacer {
+  width: 101px;
+}
+
+.header-link {
+  color: #fff;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0px 10px;
+  font-size: 0.85rem;
+
+  &~.header-link {
+    margin-left: 5px;
+  }
+
+  &.active {
+    background-color: #fff;
+    color: #607d8b;
+  }
+}
