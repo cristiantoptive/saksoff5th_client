@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="doLogin()" novalidate>
+<form [formGroup]="signinForm" (ngSubmit)="doSignin()" novalidate>
   <mat-form-field appearance="outline" class="w-100">
     <mat-label>Email Address</mat-label>
     <input matInput placeholder="name@domain.com" type="email" formControlName="email" required maxlength="255">
@@ -19,7 +19,7 @@
 
   <div class="d-flex justify-content-end">
     <button type="submit" mat-raised-button color="primary">
-      <span class="mr-2">Login</span>
+      <span class="mr-2">Sign-in</span>
       <mat-icon>login</mat-icon>
     </button>
   </div>

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { PrivateComponent } from "./private.component";
+import { DashboardComponent } from "./dashboard.component";
 
-describe("PrivateComponent", () => {
-  let component: PrivateComponent;
-  let fixture: ComponentFixture<PrivateComponent>;
+describe("DashboardComponent", () => {
+  let component: DashboardComponent;
+  let fixture: ComponentFixture<DashboardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrivateComponent ],
+      declarations: [ DashboardComponent ],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrivateComponent);
+    fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

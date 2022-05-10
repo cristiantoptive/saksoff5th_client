@@ -38,7 +38,7 @@ export class AuthenticationGuard implements CanActivate, OnDestroy {
         case AuthenticationModes.LOGGED_IN:
           if (!authenticated) {
             this.urlOnAuthenticated = state.url;
-            this.routerService.navigateToPublicSection();
+            this.routerService.navigateToSignin();
           }
 
           break;
@@ -48,7 +48,7 @@ export class AuthenticationGuard implements CanActivate, OnDestroy {
               this.router.navigateByUrl(this.urlOnAuthenticated);
               this.urlOnAuthenticated = null;
             } else {
-              this.routerService.navigateToDashboard();
+              this.routerService.navigateToMain();
             }
           }
 

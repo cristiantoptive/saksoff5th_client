@@ -35,7 +35,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             this.snackbarService.showSnackbarWarning(response.error.message);
           }
 
-          this.routerService.navigateToPublicSection();
+          this.routerService.navigateToMain();
         }));
     }
 

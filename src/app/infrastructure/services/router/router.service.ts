@@ -7,12 +7,12 @@ import { ActivatedRouteSnapshot, Router } from "@angular/router";
 export class RouterService {
   constructor(private router: Router) { }
 
-  navigateToPublicSection(): void {
+  navigateToMain(): void {
     this.router.navigateByUrl("/");
   }
 
-  navigateToDashboard(): void {
-    this.router.navigateByUrl("/dashboard");
+  navigateToSignin(): void {
+    this.router.navigateByUrl("/auth/signin");
   }
 
   retrieveParamsFromSnapshot(snapshot: ActivatedRouteSnapshot): any {

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { PublicComponent } from "./public.component";
+import { SigninComponent } from "./signin.component";
 
-describe("PublicComponent", () => {
-  let component: PublicComponent;
-  let fixture: ComponentFixture<PublicComponent>;
+describe("SigninComponent", () => {
+  let component: SigninComponent;
+  let fixture: ComponentFixture<SigninComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PublicComponent ],
+      declarations: [ SigninComponent ],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PublicComponent);
+    fixture = TestBed.createComponent(SigninComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

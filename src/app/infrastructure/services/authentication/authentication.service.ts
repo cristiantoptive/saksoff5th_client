@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { tap } from "rxjs/operators";
 
-import { AuthTokenViewModel, SigninCommand } from "@app/infrastructure/interfaces/authentication";
+import { AuthTokenViewModel, SigninCommand, SignupCommand } from "@app/infrastructure/interfaces/authentication";
 import { StorageService } from "../storage/storage.service";
 
 const TOKEN_KEY = "auth_token";
@@ -24,8 +24,18 @@ export class AuthenticationService {
     return this.isAuthenticatedSubject.asObservable();
   }
 
-  public sigin(command: SigninCommand): Observable<AuthTokenViewModel> {
+  public signin(command: SigninCommand): Observable<AuthTokenViewModel> {
     return this.http.post<AuthTokenViewModel>("/auth/signin", command)
+      .pipe(
+        tap(res => {
+          this.setAuthorizationToken(res.token);
+          this.isAuthenticatedSubject.next(this.isLoggedIn());
+        }),
+      );
+  }
+
+  public signup(command: SignupCommand): Observable<AuthTokenViewModel> {
+    return this.http.post<AuthTokenViewModel>("/auth/signup", command)
       .pipe(
         tap(res => {
           this.setAuthorizationToken(res.token);
