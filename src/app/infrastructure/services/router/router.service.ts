@@ -11,6 +11,10 @@ export class RouterService {
     this.router.navigateByUrl("/");
   }
 
+  navigateToVendors(): void {
+    this.router.navigateByUrl("/vendors");
+  }
+
   navigateToVendorAdd(): void {
     this.router.navigateByUrl("/vendors/add");
   }
@@ -21,6 +25,10 @@ export class RouterService {
 
   navigateToSignin(): void {
     this.router.navigateByUrl("/auth/signin");
+  }
+
+  navigateToSignup(): void {
+    this.router.navigateByUrl("/auth/signup");
   }
 
   retrieveParamsFromSnapshot(snapshot: ActivatedRouteSnapshot): any {

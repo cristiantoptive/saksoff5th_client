@@ -15,17 +15,23 @@
 
     <div class="d-flex justify-content-center w-100 px-3">
       <div class="d-none d-md-block">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-          mat-flat-button class="header-link">Products</a>
-        <a routerLink="/vendors" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }"
-          mat-flat-button class="header-link">Vendors</a>
+        <a *ngFor="let menu of menues"
+          [routerLink]="menu.link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: menu.exact }"
+          mat-flat-button
+          class="header-link"
+        >{{ menu.text }}</a>
       </div>
 
       <div class="d-block d-md-none">
-        <a routerLink="/" routerLinkActive="d-block" [routerLinkActiveOptions]="{ exact: true }"
-          mat-flat-button class="header-link d-none">Products</a>
-        <a routerLink="/vendors" routerLinkActive="d-block" [routerLinkActiveOptions]="{ exact: false }"
-          mat-flat-button class="header-link d-none">Vendors</a>
+        <a *ngFor="let menu of menues"
+          [routerLink]="menu.link"
+          routerLinkActive="d-block"
+          [routerLinkActiveOptions]="{ exact: menu.exact }"
+          mat-flat-button
+          class="header-link d-none"
+        >{{ menu.text }}</a>
       </div>
     </div>
 
@@ -38,9 +44,13 @@
           <mat-icon>info</mat-icon>
           <span>App Info</span>
         </button>
-        <button mat-menu-item (click)="logout()">
+        <button mat-menu-item (click)="logout()" *ngIf="user && user.id">
           <mat-icon>logout</mat-icon>
           <span>Logout</span>
+        </button>
+        <button mat-menu-item (click)="login()" *ngIf="!user || !user.id">
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
         </button>
       </mat-menu>
     </div>

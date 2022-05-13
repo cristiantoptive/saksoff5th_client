@@ -9,10 +9,13 @@
       </mat-toolbar>
 
       <div class="d-flex flex-column py-3">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" mat-button
-          class="header-link">Products</a>
-        <a routerLink="/vendors" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }"
-          mat-button class="header-link">Vendors</a>
+        <a *ngFor="let menu of menues"
+          [routerLink]="menu.link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: menu.exact }"
+          mat-button
+          class="header-link"
+        >{{ menu.text }}</a>
       </div>
     </div>
   </mat-sidenav>
