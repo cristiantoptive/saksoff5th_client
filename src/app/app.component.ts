@@ -4,7 +4,6 @@ import { SwUpdate } from "@angular/service-worker";
 import { delay, filter } from "rxjs/operators";
 import { Subscription } from "rxjs";
 
-import { UsersService } from "@app/infrastructure/services/users/users.service";
 import { AlertsService } from "@app/infrastructure/services/alerts/alerts.service";
 import { AuthenticationService } from "@app/infrastructure/services/authentication/authentication.service";
 
@@ -20,7 +19,6 @@ export class AppComponent {
   constructor(
     private router: Router,
     private swUpdate: SwUpdate,
-    private usersService: UsersService,
     private alertsService: AlertsService,
     private authenticationService: AuthenticationService,
 
@@ -77,7 +75,7 @@ export class AppComponent {
       this.subscriptions[2].unsubscribe();
     }
 
-    this.subscriptions[2] = this.usersService
+    this.subscriptions[2] = this.authenticationService
       .currentUser()
       .pipe(
         filter(user => !!user.id),

@@ -17,3 +17,8 @@ export interface AuthTokenViewModel {
   user: UserViewModel;
 }
 
+export interface ChangePasswordCommand {
+  oldPassword: string;
+  newPassword: string;
+}
+

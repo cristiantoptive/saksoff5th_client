@@ -11,6 +11,14 @@ export class RouterService {
     this.router.navigateByUrl("/");
   }
 
+  navigateToVendorAdd(): void {
+    this.router.navigateByUrl("/vendors/add");
+  }
+
+  navigateToVendorEdit(id: string): void {
+    this.router.navigateByUrl(`/vendors/edit/${id}`);
+  }
+
   navigateToSignin(): void {
     this.router.navigateByUrl("/auth/signin");
   }
