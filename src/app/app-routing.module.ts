@@ -59,7 +59,7 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard],
         data: {
           authMode: AuthenticationModes.LOGGED_IN,
-          authRoles: [Roles.Customer],
+          authRoles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
           reuse: false,
         },
         loadChildren: () => import("./modules/addresses/addresses.module").then(m => m.AddressesModule),
@@ -69,10 +69,14 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard],
         data: {
           authMode: AuthenticationModes.LOGGED_IN,
-          authRoles: [Roles.Customer],
+          authRoles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
           reuse: false,
         },
         loadChildren: () => import("./modules/cards/cards.module").then(m => m.CardsModule),
+      },
+      {
+        path: "",
+        loadChildren: () => import("./modules/catalog/catalog.module").then(m => m.CatalogModule),
       },
     ],
   },

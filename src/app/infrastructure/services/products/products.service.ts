@@ -12,7 +12,7 @@ export class ProductsService {
     private http: HttpClient,
   ) { }
 
-  public all(onlyMine?: boolean): Observable<ProductViewModel[]> {
+  public all(onlyMine: boolean = false): Observable<ProductViewModel[]> {
     return this.http.get<ProductViewModel[]>("/products", { params: { onlyMine } });
   }
 

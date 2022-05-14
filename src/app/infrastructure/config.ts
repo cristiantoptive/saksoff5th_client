@@ -7,6 +7,18 @@ export const Menues = [
     link: "/",
   },
   {
+    text: "My addresses",
+    exact: false,
+    link: "/addresses",
+    roles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+  },
+  {
+    text: "My cards",
+    exact: false,
+    link: "/cards",
+    roles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+  },
+  {
     text: "My vendors",
     exact: false,
     link: "/vendors",
@@ -29,18 +41,6 @@ export const Menues = [
     exact: false,
     link: "/users",
     roles: [Roles.Admin],
-  },
-  {
-    text: "My addresses",
-    exact: false,
-    link: "/addresses",
-    roles: [Roles.Customer],
-  },
-  {
-    text: "My cards",
-    exact: false,
-    link: "/cards",
-    roles: [Roles.Customer],
   },
 ];
 

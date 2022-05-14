@@ -12,7 +12,7 @@ export class VendorsService {
     private http: HttpClient,
   ) { }
 
-  public all(onlyMine?: boolean): Observable<VendorViewModel[]> {
+  public all(onlyMine: boolean = false): Observable<VendorViewModel[]> {
     return this.http.get<VendorViewModel[]>("/vendors", { params: { onlyMine } });
   }
 
