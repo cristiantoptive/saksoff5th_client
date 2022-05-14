@@ -13,7 +13,7 @@ export class VendorsService {
   ) { }
 
   public all(onlyMine: boolean = false): Observable<VendorViewModel[]> {
-    return this.http.get<VendorViewModel[]>("/vendors", { params: { onlyMine } });
+    return this.http.get<VendorViewModel[]>("/vendors", { params: onlyMine ? { onlyMine } : { } });
   }
 
   public one(id: string): Observable<VendorViewModel> {

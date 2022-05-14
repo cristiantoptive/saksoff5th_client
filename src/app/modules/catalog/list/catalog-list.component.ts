@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatSelectChange } from "@angular/material/select";
+import { SubCollector } from "@app/infrastructure/core/helpers/subcollertor";
 import { ProductCategoryViewModel } from "@app/infrastructure/interfaces/categories";
 import { ProductViewModel } from "@app/infrastructure/interfaces/products";
 import { VendorViewModel } from "@app/infrastructure/interfaces/vendors";
@@ -7,12 +8,14 @@ import { ProductCategoryService } from "@app/infrastructure/services/product-cat
 import { ProductsService } from "@app/infrastructure/services/products/products.service";
 import { SnackbarService } from "@app/infrastructure/services/snackbar/snackbar.service";
 import { VendorsService } from "@app/infrastructure/services/vendors/vendors.service";
+import { Observable, of, Subscription, throwError, zip } from "rxjs";
+import { tap, catchError, finalize, delay, mergeMap } from "rxjs/operators";
 
 @Component({
   templateUrl: "./catalog-list.component.html",
   styleUrls: ["./catalog-list.component.scss"],
 })
-export class CatalogListComponent implements OnInit {
+export class CatalogListComponent implements OnInit, OnDestroy {
   public isBusy: boolean;
 
   public products: ProductViewModel[];
@@ -29,6 +32,11 @@ export class CatalogListComponent implements OnInit {
     "https://material.angular.io/assets/img/examples/shiba2.jpg",
   ];
 
+  @SubCollector()
+  public subscriptions;
+
+  private searchSubscription: Subscription;
+
   constructor(
     private vendorService: VendorsService,
     private productService: ProductsService,
@@ -39,42 +47,47 @@ export class CatalogListComponent implements OnInit {
 
   ngOnInit(): void {
     this.isBusy = true;
-    this.productService.all()
-      .subscribe(products => {
+
+    this.subscriptions = zip(
+      this.fetchProducts(),
+      this.categoriesService.all(),
+      this.vendorService.all(),
+    )
+      .subscribe(([products, categories, vendors]) => {
         this.products = products;
+        this.vendors = vendors;
+        this.categories = categories;
         this.isBusy = false;
       }, err => {
         this.isBusy = false;
         this.snackbarService.showSnackbarFailure(err);
       });
-
-    this.categoriesService.all()
-      .subscribe(categories => {
-        this.categories = categories;
-      });
-
-    this.vendorService.all()
-      .subscribe(vendors => {
-        this.vendors = vendors;
-      });
   }
 
+  /** note: required by @SubCollector() to work correctly */
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  ngOnDestroy(): void { }
+
   onSearchCategoryChange($event: MatSelectChange): void {
-    console.log($event);
+    this.selectedCategory = $event.value;
+    this.doFetchProducts();
   }
 
   onSearchVendorChange($event: MatSelectChange): void {
-    console.log($event);
+    this.selectedVendor = $event.value;
+    this.doFetchProducts();
   }
 
   onSearchTextChange(search: string): void {
     console.log(search);
+    this.doFetchProducts();
   }
 
   onClearSearch(): void {
     this.searchText = "";
     this.selectedVendor = [];
     this.selectedCategory = [];
+    this.doFetchProducts(true);
   }
 
   onAddToCart(product: ProductViewModel): void {
@@ -83,5 +96,39 @@ export class CatalogListComponent implements OnInit {
 
   onBuyProduct(product: ProductViewModel): void {
     console.log(product);
+  }
+
+  private doFetchProducts(inmediate = false) {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+
+    this.searchSubscription = of(null)
+      .pipe(
+        delay(inmediate ? 0 : 500),
+        tap(() => (this.isBusy = true)),
+        mergeMap(() => this.fetchProducts()),
+        finalize(() => (this.isBusy = false)),
+      )
+      .subscribe();
+  }
+
+  private fetchProducts(): Observable<any> {
+    return this.productService
+      .all(
+        false,
+        this.searchText,
+        (this.selectedCategory || []).map(category => category.id),
+        (this.selectedVendor || []).map(vendor => vendor.id),
+      )
+      .pipe(
+        tap(products => {
+          this.products = products;
+        }),
+        catchError((err: any) => {
+          this.snackbarService.showSnackbarFailure("An error has ocurred");
+          return throwError(err);
+        }),
+      );
   }
 }

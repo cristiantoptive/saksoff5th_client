@@ -12,8 +12,15 @@ export class ProductsService {
     private http: HttpClient,
   ) { }
 
-  public all(onlyMine: boolean = false): Observable<ProductViewModel[]> {
-    return this.http.get<ProductViewModel[]>("/products", { params: { onlyMine } });
+  public all(onlyMine: boolean = false, search: string = null, categories: string[] = null, vendors: string[] = null): Observable<ProductViewModel[]> {
+    return this.http.get<ProductViewModel[]>("/products", {
+      params: {
+        ...(onlyMine ? { onlyMine } : { }),
+        ...(search ? { search } : { }),
+        ...(categories && categories.length ? { categories } : { }),
+        ...(vendors && vendors.length ? { vendors } : { }),
+      },
+    });
   }
 
   public one(id: string): Observable<ProductViewModel> {

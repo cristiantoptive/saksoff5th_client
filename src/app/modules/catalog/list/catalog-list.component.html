@@ -39,7 +39,7 @@
 
 <div class="products-catalog row mt-3">
   <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let product of products">
-    <mat-card class="example-card">
+    <mat-card>
       <mat-card-header class="w-100">
         <mat-card-title class="d-flex justify-content-between">
           <span>{{ product.title }}</span>
@@ -75,7 +75,7 @@
       <mat-card-content>
         <div class="d-flex  justify-content-between">
           <small>Offered by: {{ product.vendor ? product.vendor.name : 'Not provided' }}</small>
-          <small>Stock: {{ product.inventory }}</small>
+          <small class="text-nowrap">Stock: {{ product.inventory }}</small>
         </div>
         <p class="mt-2">
           {{ product.description ? product.description : 'No description provided.' }}
@@ -91,5 +91,20 @@
       </mat-card-actions>
     </mat-card>
   </div>
+
+  <div class="col-12" *ngIf="!isBusy && (!products || !products.length)">
+    <mat-card>
+      <mat-card-header class="row">
+        <mat-card-title>
+          No results
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>We can't find any product that matches your requirements</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
-<app-spinner [show]="isBusy"></app-spinner>
+
+<app-spinner [show]="isBusy" [fixed]="true"></app-spinner>
