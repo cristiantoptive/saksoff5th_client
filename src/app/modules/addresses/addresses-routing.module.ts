@@ -1,32 +1,33 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { VendorsComponent } from "./vendors.component";
-import { VendorListComponent } from "./list/vendor-list.component";
-import { VendorAddComponent } from "./add/vendor-add.component";
-import { VendorEditComponent } from "./edit/vendor-edit.component";
+import { AddressAddComponent } from "./add/address-add.component";
+
+import { AddressesComponent } from "./addresses.component";
+import { AddressEditComponent } from "./edit/address-edit.component";
+import { AddressListComponent } from "./list/address-list.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: VendorsComponent,
+    component: AddressesComponent,
     children: [
       {
         path: "",
-        component: VendorListComponent,
+        component: AddressListComponent,
         data: {
           reuse: false,
         },
       },
       {
         path: "add",
-        component: VendorAddComponent,
+        component: AddressAddComponent,
         data: {
           reuse: false,
         },
       },
       {
         path: "edit/:id",
-        component: VendorEditComponent,
+        component: AddressEditComponent,
         data: {
           reuse: false,
         },
@@ -39,4 +40,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class VendorsRoutingModule { }
+export class AddressesRoutingModule { }

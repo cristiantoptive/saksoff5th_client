@@ -7,7 +7,7 @@
 <form class="row" [formGroup]="vendorForm" (ngSubmit)="doSave()" novalidate #vendorFormRef>
   <mat-form-field class="col-12" appearance="outline">
     <mat-label>Name</mat-label>
-    <input matInput #input placeholder="" formControlName="name" maxlength="200" required>
+    <input matInput #input placeholder="" formControlName="name" maxlength="200">
     <mat-error>This field is required.</mat-error>
   </mat-form-field>
 

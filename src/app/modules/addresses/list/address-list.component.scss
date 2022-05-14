@@ -1,0 +1,33 @@
+.table-container {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.bordered-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  transform: translateY(0) !important;
+  will-change: transform;
+}
+
+.action-cell {
+  button ~ button {
+    margin-left: 5px;
+  }
+}
+
+.mat-table-sticky.mat-footer-cell {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: none;
+}
+
+.pagination-row {
+  border-top: 1px solid #e0e0e0;
+}
+
+.mobile-paginator {
+  padding-right: 60px;
+}

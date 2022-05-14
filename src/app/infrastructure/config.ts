@@ -2,7 +2,7 @@ import { Roles, UserViewModel } from "./interfaces/users";
 
 export const Menues = [
   {
-    text: "Products",
+    text: "Catalog",
     exact: true,
     link: "/",
   },
@@ -11,6 +11,12 @@ export const Menues = [
     exact: false,
     link: "/vendors",
     roles: [Roles.Merchandiser],
+  },
+  {
+    text: "Addresses",
+    exact: false,
+    link: "/addresses",
+    roles: [Roles.Customer],
   },
 ];
 

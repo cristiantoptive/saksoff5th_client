@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AuthenticationGuard, AuthenticationModes } from "./infrastructure/services/authentication/authentication.guard";
-import { DashboardComponent } from "./shared/components/dashboard/dashboard.component";
+import { Roles } from "@app/infrastructure/interfaces/users";
+import { AuthenticationGuard, AuthenticationModes } from "@app/infrastructure/services/authentication/authentication.guard";
+import { DashboardComponent } from "@app/shared/components/dashboard/dashboard.component";
 
 const routes: Routes = [
   {
@@ -15,7 +16,23 @@ const routes: Routes = [
     children: [
       {
         path: "vendors",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Merchandiser],
+          reuse: false,
+        },
         loadChildren: () => import("./modules/vendors/vendors.module").then(m => m.VendorsModule),
+      },
+      {
+        path: "addresses",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Customer],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/addresses/addresses.module").then(m => m.AddressesModule),
       },
     ],
   },
