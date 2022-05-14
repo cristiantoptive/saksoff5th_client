@@ -18,6 +18,12 @@ export const Menues = [
     link: "/addresses",
     roles: [Roles.Customer],
   },
+  {
+    text: "Cards",
+    exact: false,
+    link: "/cards",
+    roles: [Roles.Customer],
+  },
 ];
 
 export function getMenuesForUser(user: UserViewModel): any {

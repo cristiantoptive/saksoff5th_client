@@ -34,6 +34,16 @@ const routes: Routes = [
         },
         loadChildren: () => import("./modules/addresses/addresses.module").then(m => m.AddressesModule),
       },
+      {
+        path: "cards",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Customer],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/cards/cards.module").then(m => m.CardsModule),
+      },
     ],
   },
   {

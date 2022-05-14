@@ -50,6 +50,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTreeModule } from "@angular/material/tree";
 import { DragDropModule } from "@angular/cdk/drag-drop";
+import { MomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
   exports: [
@@ -93,6 +94,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     MatTooltipModule,
     MatTreeModule,
     DragDropModule,
+    MomentDateModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: "en-US" },

@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="text-primary font-weight-normal">Edit Card</h2>
+  </div>
+</div>
+
+<form class="row" [formGroup]="cardForm" (ngSubmit)="doSave()" novalidate #cardFormRef>
+  <mat-form-field class="col-12" appearance="outline">
+    <mat-label>Name on card</mat-label>
+    <input matInput #input placeholder="" formControlName="name" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Card number</mat-label>
+    <input matInput #input placeholder="" formControlName="number" maxlength="19">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Card expiration date</mat-label>
+    <input matInput [matDatepicker]="dp" formControlName="expiresOn">
+    <mat-hint>MM/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp startView="multi-year" (monthSelected)="setMonthAndYear($event, dp)" panelClass="month-picker"></mat-datepicker>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <div class="col-12 d-flex justify-content-end">
+    <button type="button" mat-raised-button color="warn" class="mr-1" (click)="doCancel()">
+      Cancel
+    </button>
+    <button type="submit" mat-raised-button color="primary" class="ml-1">
+      Save
+    </button>
+  </div>
+</form>
+
+<app-spinner [show]="isBusy"></app-spinner>
