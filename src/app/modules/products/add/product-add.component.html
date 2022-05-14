@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="text-primary font-weight-normal">Add Product</h2>
+  </div>
+</div>
+
+<form class="row" [formGroup]="productForm" (ngSubmit)="doSave()" novalidate #productFormRef>
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>SKU</mat-label>
+    <input matInput #input placeholder="" formControlName="SKU" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Title/Name</mat-label>
+    <input matInput #input placeholder="" formControlName="title" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12" appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea matInput #input placeholder="" formControlName="description"></textarea>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Price</mat-label>
+    <input matInput #input placeholder="" formControlName="price" type="number" step=".01">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Inventory</mat-label>
+    <input matInput #input placeholder="" formControlName="inventory" type="number" step="1">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Delivery Time</mat-label>
+    <input matInput #input placeholder="" formControlName="deliveryTime" type="text" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Active</mat-label>
+    <mat-select formControlName="isActive">
+      <mat-option [value]="true">
+        Yes
+      </mat-option>
+      <mat-option [value]="false">
+        No
+      </mat-option>
+    </mat-select>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      <mat-option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Vendor</mat-label>
+    <mat-select formControlName="vendor">
+      <mat-option *ngFor="let vendor of vendors" [value]="vendor.id">
+        {{ vendor.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <div class="col-12 d-flex justify-content-end">
+    <button type="button" mat-raised-button color="warn" class="mr-1" (click)="doCancel()">
+      Cancel
+    </button>
+    <button type="submit" mat-raised-button color="primary" class="ml-1">
+      Save
+    </button>
+  </div>
+</form>
+
+<app-spinner [show]="isBusy"></app-spinner>

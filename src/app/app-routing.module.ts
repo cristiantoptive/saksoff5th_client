@@ -25,6 +25,16 @@ const routes: Routes = [
         loadChildren: () => import("./modules/vendors/vendors.module").then(m => m.VendorsModule),
       },
       {
+        path: "products",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Merchandiser],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/products/products.module").then(m => m.ProductsModule),
+      },
+      {
         path: "categories",
         canActivate: [AuthenticationGuard],
         data: {

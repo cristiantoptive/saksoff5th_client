@@ -7,9 +7,15 @@ export const Menues = [
     link: "/",
   },
   {
-    text: "Vendors",
+    text: "My vendors",
     exact: false,
     link: "/vendors",
+    roles: [Roles.Merchandiser],
+  },
+  {
+    text: "My products",
+    exact: false,
+    link: "/products",
     roles: [Roles.Merchandiser],
   },
   {
@@ -25,13 +31,13 @@ export const Menues = [
     roles: [Roles.Admin],
   },
   {
-    text: "Addresses",
+    text: "My addresses",
     exact: false,
     link: "/addresses",
     roles: [Roles.Customer],
   },
   {
-    text: "Cards",
+    text: "My cards",
     exact: false,
     link: "/cards",
     roles: [Roles.Customer],
