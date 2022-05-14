@@ -25,6 +25,16 @@ const routes: Routes = [
         loadChildren: () => import("./modules/vendors/vendors.module").then(m => m.VendorsModule),
       },
       {
+        path: "categories",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Admin],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/categories/categories.module").then(m => m.CategoriesModule),
+      },
+      {
         path: "addresses",
         canActivate: [AuthenticationGuard],
         data: {

@@ -13,6 +13,12 @@ export const Menues = [
     roles: [Roles.Merchandiser],
   },
   {
+    text: "Categories",
+    exact: false,
+    link: "/categories",
+    roles: [Roles.Admin],
+  },
+  {
     text: "Addresses",
     exact: false,
     link: "/addresses",
