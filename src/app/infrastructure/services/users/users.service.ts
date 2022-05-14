@@ -12,11 +12,11 @@ export class UsersService {
     private http: HttpClient,
   ) { }
 
-  public all(onlyMine?: boolean): Observable<UserExcerptViewModel[]> {
-    return this.http.get<UserExcerptViewModel[]>("/users", { params: { onlyMine } });
+  public all(): Observable<UserExcerptViewModel[] | UserViewModel[]> {
+    return this.http.get<UserExcerptViewModel[]>("/users");
   }
 
-  public one(id: string): Observable<UserExcerptViewModel> {
+  public one(id: string): Observable<UserExcerptViewModel | UserViewModel> {
     return this.http.get<UserExcerptViewModel>(`/users/${id}`);
   }
 

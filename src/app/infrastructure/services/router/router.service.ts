@@ -47,6 +47,18 @@ export class RouterService {
     this.router.navigateByUrl(`/vendors/edit/${id}`);
   }
 
+  navigateToUsers(): void {
+    this.router.navigateByUrl("/users");
+  }
+
+  navigateToUserAdd(): void {
+    this.router.navigateByUrl("/users/add");
+  }
+
+  navigateToUserEdit(id: string): void {
+    this.router.navigateByUrl(`/users/edit/${id}`);
+  }
+
   navigateToCategories(): void {
     this.router.navigateByUrl("/categories");
   }

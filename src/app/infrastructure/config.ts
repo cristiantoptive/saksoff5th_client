@@ -19,6 +19,12 @@ export const Menues = [
     roles: [Roles.Admin],
   },
   {
+    text: "Users",
+    exact: false,
+    link: "/users",
+    roles: [Roles.Admin],
+  },
+  {
     text: "Addresses",
     exact: false,
     link: "/addresses",
