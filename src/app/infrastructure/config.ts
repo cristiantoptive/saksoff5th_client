@@ -7,6 +7,14 @@ export const Menues = [
     link: "/",
   },
   {
+    text: "Cart",
+    exact: false,
+    link: "/cart",
+    roles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+    isCart: true,
+    icon: "shopping_cart",
+  },
+  {
     text: "My addresses",
     exact: false,
     link: "/addresses",
@@ -16,6 +24,12 @@ export const Menues = [
     text: "My cards",
     exact: false,
     link: "/cards",
+    roles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+  },
+  {
+    text: "My orders",
+    exact: false,
+    link: "/orders",
     roles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
   },
   {

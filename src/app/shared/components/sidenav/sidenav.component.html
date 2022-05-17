@@ -15,7 +15,11 @@
           [routerLinkActiveOptions]="{ exact: menu.exact }"
           mat-button
           class="header-link"
-        >{{ menu.text }}</a>
+        >
+          {{ menu.text }}
+          <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+          <span *ngIf="menu.isCart && cartItemsCount > 0" [matBadge]="cartItemsCount" matBadgeColor="warn" [matBadgeOverlap]="true"></span>
+        </a>
       </div>
     </div>
   </mat-sidenav>

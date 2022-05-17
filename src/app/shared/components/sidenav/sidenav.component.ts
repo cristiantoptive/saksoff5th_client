@@ -4,6 +4,7 @@ import { filter } from "rxjs/operators";
 import { getMenuesForUser } from "@app/infrastructure/config";
 import { SubCollector } from "@app/infrastructure/core/helpers/subcollertor";
 import { UserViewModel } from "@app/infrastructure/interfaces/users";
+import { CartService } from "@app/infrastructure/services/cart/cart.service";
 
 @Component({
   selector: "app-sidenav",
@@ -13,6 +14,7 @@ import { UserViewModel } from "@app/infrastructure/interfaces/users";
 })
 export class SidenavComponent implements OnInit, OnDestroy {
   public isSidenavOpened = false;
+  public cartItemsCount: number;
 
   @Input() user: UserViewModel;
   @SubCollector() subscriptions;
@@ -21,13 +23,22 @@ export class SidenavComponent implements OnInit, OnDestroy {
     return getMenuesForUser(this.user);
   }
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions = this.router.events
       .pipe(filter(event => event instanceof NavigationStart))
       .subscribe(() => {
         this.isSidenavOpened = false;
+      });
+
+    this.subscriptions = this.cartService
+      .currentCart()
+      .subscribe(items => {
+        this.cartItemsCount = items.length;
       });
   }
 

@@ -75,6 +75,26 @@ const routes: Routes = [
         loadChildren: () => import("./modules/cards/cards.module").then(m => m.CardsModule),
       },
       {
+        path: "cart",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/cart/cart.module").then(m => m.CartModule),
+      },
+      {
+        path: "orders",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/orders/orders.module").then(m => m.OrdersModule),
+      },
+      {
         path: "",
         loadChildren: () => import("./modules/catalog/catalog.module").then(m => m.CatalogModule),
       },

@@ -11,6 +11,18 @@ export class RouterService {
     this.router.navigateByUrl("/");
   }
 
+  navigateToOrders(): void {
+    this.router.navigateByUrl("/orders");
+  }
+
+  navigateToOrderAdd(): void {
+    this.router.navigateByUrl("/orders/add");
+  }
+
+  navigateToCart(): void {
+    this.router.navigateByUrl("/cart");
+  }
+
   navigateToCards(): void {
     this.router.navigateByUrl("/cards");
   }

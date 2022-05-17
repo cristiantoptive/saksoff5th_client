@@ -16,6 +16,10 @@ export interface ProductViewModel {
   images: UploadViewModel[];
 }
 
+export interface CartProductViewModel extends ProductViewModel {
+  quantity: number;
+}
+
 export interface ProductCommand {
   SKU: string;
   title: string;

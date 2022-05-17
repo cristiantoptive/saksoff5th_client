@@ -4,8 +4,11 @@ import { SubCollector } from "@app/infrastructure/core/helpers/subcollertor";
 import { ProductCategoryViewModel } from "@app/infrastructure/interfaces/categories";
 import { ProductViewModel } from "@app/infrastructure/interfaces/products";
 import { VendorViewModel } from "@app/infrastructure/interfaces/vendors";
+import { AlertsService } from "@app/infrastructure/services/alerts/alerts.service";
+import { CartService } from "@app/infrastructure/services/cart/cart.service";
 import { ProductCategoryService } from "@app/infrastructure/services/product-category/product-category.service";
 import { ProductsService } from "@app/infrastructure/services/products/products.service";
+import { RouterService } from "@app/infrastructure/services/router/router.service";
 import { SnackbarService } from "@app/infrastructure/services/snackbar/snackbar.service";
 import { VendorsService } from "@app/infrastructure/services/vendors/vendors.service";
 import { Observable, of, Subscription, throwError, zip } from "rxjs";
@@ -38,6 +41,9 @@ export class CatalogListComponent implements OnInit, OnDestroy {
   private searchSubscription: Subscription;
 
   constructor(
+    private cartService: CartService,
+    private routerService: RouterService,
+    private alertsService: AlertsService,
     private vendorService: VendorsService,
     private productService: ProductsService,
     private snackbarService: SnackbarService,
@@ -79,7 +85,7 @@ export class CatalogListComponent implements OnInit, OnDestroy {
   }
 
   onSearchTextChange(search: string): void {
-    console.log(search);
+    this.searchText = search;
     this.doFetchProducts();
   }
 
@@ -91,11 +97,24 @@ export class CatalogListComponent implements OnInit, OnDestroy {
   }
 
   onAddToCart(product: ProductViewModel): void {
-    console.log(product);
+    this.cartService.addItem(product);
+    this.alertsService
+      .showConfirm({
+        title: "Success",
+        content: "Your product has been added to the cart",
+        accept: "View your cart",
+        cancel: "View more products",
+      })
+      .subscribe(res => {
+        if (res) {
+          this.routerService.navigateToCart();
+        }
+      });
   }
 
   onBuyProduct(product: ProductViewModel): void {
-    console.log(product);
+    this.cartService.addItem(product);
+    this.routerService.navigateToCart();
   }
 
   private doFetchProducts(inmediate = false) {
