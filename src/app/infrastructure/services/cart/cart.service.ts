@@ -43,7 +43,9 @@ export class CartService {
   public addItem(item: ProductViewModel | CartProductViewModel): void {
     const existingItem = this.cartItems.find(cartItem => cartItem.id === item.id);
     if (existingItem) {
-      existingItem.quantity++;
+      if (item.inventory >= (existingItem.quantity + 1)) {
+        existingItem.quantity++;
+      }
     } else {
       const targetItem: CartProductViewModel = JSON.parse(JSON.stringify(item));
       targetItem.quantity = 1;

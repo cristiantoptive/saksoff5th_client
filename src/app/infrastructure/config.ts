@@ -10,7 +10,6 @@ export const Menues = [
     text: "Cart",
     exact: false,
     link: "/cart",
-    roles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
     isCart: true,
     icon: "shopping_cart",
   },

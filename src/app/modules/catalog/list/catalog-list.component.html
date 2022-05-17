@@ -82,11 +82,14 @@
         </p>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-stroked-button color="primary" (click)="onAddToCart(product)">
+        <button mat-stroked-button color="primary" (click)="onAddToCart(product)" *ngIf="product.inventory > 0">
           <mat-icon>add_shopping_cart</mat-icon> Add to cart
         </button>
-        <button mat-raised-button color="primary" (click)="onBuyProduct(product)">
+        <button mat-raised-button color="primary" (click)="onBuyProduct(product)" *ngIf="product.inventory > 0">
           <mat-icon>shopping_cart</mat-icon> Buy
+        </button>
+        <button mat-stroked-button color="primary" *ngIf="product.inventory == 0" disabled>
+          <mat-icon>add_shopping_cart</mat-icon> No more stock
         </button>
       </mat-card-actions>
     </mat-card>

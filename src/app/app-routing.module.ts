@@ -78,8 +78,7 @@ const routes: Routes = [
         path: "cart",
         canActivate: [AuthenticationGuard],
         data: {
-          authMode: AuthenticationModes.LOGGED_IN,
-          authRoles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+          authMode: AuthenticationModes.ANY,
           reuse: false,
         },
         loadChildren: () => import("./modules/cart/cart.module").then(m => m.CartModule),
