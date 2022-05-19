@@ -1,0 +1,58 @@
+.documents-wrapper {
+  display: inline-block;
+  position: relative;
+  text-align: left;
+
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 1.125;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+  margin-top: 8px;
+
+  .documents-container {
+    margin: .25em 0;
+    position: relative;
+    padding-bottom: 1.34375em;
+
+    .documents-card {
+      padding: 0 .75em 0 .75em;
+      margin-top: -0.25em;
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+
+      .documents-label {
+        position: absolute;
+        top: -8px;
+        left: 4px;
+        background: white;
+        padding: 0 10px;
+        font-size: 12px;
+      }
+    }
+
+    .progress-bar-container {
+      position: absolute;
+      left: 10px;
+      top: -5px;
+      width: calc(100% - 19px);
+      height: calc(100% - 10px);
+    }
+
+    .translucent {
+      opacity: 0.25;
+    }
+  }
+}
+
+.spinner-container {
+  position: absolute;
+  top: -10px;
+  left: 5px;
+  height: 100%;
+  width: calc(100% - 10px);
+}

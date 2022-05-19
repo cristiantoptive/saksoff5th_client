@@ -56,7 +56,6 @@
           color="warn"
           maxWidth="auto"
           proportion="100"
-          [slides]="slides.length"
           [loop]="false"
           [hideArrows]="false"
           [hideIndicators]="false"
@@ -65,9 +64,15 @@
           orientation="ltr"
         >
           <mat-carousel-slide
-            *ngFor="let slide of slides; let i = index"
+            *ngFor="let image of product.images; let i = index"
             #matCarouselSlide
-            [image]="slide"
+            [image]="getImageUrl(image)"
+            [hideOverlay]="true"
+          ></mat-carousel-slide>
+          <mat-carousel-slide
+            *ngIf="!product.images || !product.images.length"
+            #matCarouselSlide
+            [image]="defaultImage"
             [hideOverlay]="true"
           ></mat-carousel-slide>
         </mat-carousel>

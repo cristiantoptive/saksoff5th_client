@@ -10,6 +10,7 @@ import { AlertComponent } from "./components/alert/alert.component";
 import { SidenavComponent } from "./components/sidenav/sidenav.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { UploadsComponent } from "./components/uploads/uploads.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
     SidenavComponent,
     HeaderComponent,
     DashboardComponent,
+    UploadsComponent,
   ],
   exports: [
     SpinnerComponent,
@@ -25,6 +27,7 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
     SidenavComponent,
     HeaderComponent,
     DashboardComponent,
+    UploadsComponent,
   ],
   imports: [
     CommonModule,

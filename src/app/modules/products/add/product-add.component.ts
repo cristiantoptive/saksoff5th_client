@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { zip } from "rxjs";
+import { map, mergeMap } from "rxjs/operators";
 import { SubCollector } from "@app/infrastructure/core/helpers/subcollertor";
 import { ProductCategoryViewModel } from "@app/infrastructure/interfaces/categories";
 import { VendorViewModel } from "@app/infrastructure/interfaces/vendors";
@@ -9,6 +10,8 @@ import { ProductsService } from "@app/infrastructure/services/products/products.
 import { RouterService } from "@app/infrastructure/services/router/router.service";
 import { SnackbarService } from "@app/infrastructure/services/snackbar/snackbar.service";
 import { VendorsService } from "@app/infrastructure/services/vendors/vendors.service";
+import { UploadsComponent } from "@app/shared/components/uploads/uploads.component";
+import { UploadViewModel } from "@app/infrastructure/interfaces/uploads";
 
 @Component({
   templateUrl: "./product-add.component.html",
@@ -16,12 +19,14 @@ import { VendorsService } from "@app/infrastructure/services/vendors/vendors.ser
 })
 export class ProductAddComponent implements OnInit, OnDestroy {
   @ViewChild("productFormRef") productFormRef: ElementRef;
+  @ViewChild(UploadsComponent) uploadsComponent: UploadsComponent;
 
   public productForm: FormGroup;
   public isBusy = false;
 
   public vendors: VendorViewModel[];
   public categories: ProductCategoryViewModel[];
+  public uploads: UploadViewModel[] = [];
 
   @SubCollector()
   public subscriptions;
@@ -80,6 +85,7 @@ export class ProductAddComponent implements OnInit, OnDestroy {
     this.isBusy = true;
 
     this.productsService.create(this.productForm.value)
+      .pipe(mergeMap(product => this.uploadsComponent.processDocuments("product", product.id).pipe(map(() => product))))
       .subscribe(() => {
         this.isBusy = false;
         this.routerService.navigateToProducts();

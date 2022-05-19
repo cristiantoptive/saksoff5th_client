@@ -3,6 +3,7 @@ import { MatSelectChange } from "@angular/material/select";
 import { SubCollector } from "@app/infrastructure/core/helpers/subcollertor";
 import { ProductCategoryViewModel } from "@app/infrastructure/interfaces/categories";
 import { ProductViewModel } from "@app/infrastructure/interfaces/products";
+import { UploadViewModel } from "@app/infrastructure/interfaces/uploads";
 import { VendorViewModel } from "@app/infrastructure/interfaces/vendors";
 import { AlertsService } from "@app/infrastructure/services/alerts/alerts.service";
 import { CartService } from "@app/infrastructure/services/cart/cart.service";
@@ -11,6 +12,7 @@ import { ProductsService } from "@app/infrastructure/services/products/products.
 import { RouterService } from "@app/infrastructure/services/router/router.service";
 import { SnackbarService } from "@app/infrastructure/services/snackbar/snackbar.service";
 import { VendorsService } from "@app/infrastructure/services/vendors/vendors.service";
+import { environment } from "@env/environment";
 import { Observable, of, Subscription, throwError, zip } from "rxjs";
 import { tap, catchError, finalize, delay, mergeMap } from "rxjs/operators";
 
@@ -29,11 +31,7 @@ export class CatalogListComponent implements OnInit, OnDestroy {
   public selectedVendor: any;
   public searchText: string;
 
-  public slides = [
-    "https://material.angular.io/assets/img/examples/shiba2.jpg",
-    "https://material.angular.io/assets/img/examples/shiba2.jpg",
-    "https://material.angular.io/assets/img/examples/shiba2.jpg",
-  ];
+  public defaultImage = "./assets/splash_big.png";
 
   @SubCollector()
   public subscriptions;
@@ -115,6 +113,10 @@ export class CatalogListComponent implements OnInit, OnDestroy {
   onBuyProduct(product: ProductViewModel): void {
     this.cartService.addItem(product);
     this.routerService.navigateToCart();
+  }
+
+  getImageUrl(upload: UploadViewModel): string {
+    return `${environment.apiUrl}/upload/${upload.id}`;
   }
 
   private doFetchProducts(inmediate = false) {

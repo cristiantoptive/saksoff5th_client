@@ -1,0 +1,82 @@
+<div class="documents-wrapper w-100">
+  <div class="documents-container">
+    <div class="documents-card">
+      <div class="documents-label">
+        {{ title }}
+      </div>
+
+      <div class="flex flex-row w-100 pt-3">
+        <div *ngIf="!uploads || !uploads.length" class="pb-4 pt-2 px-1">* No elements yet</div>
+
+        <div class="row flex-fill position-relative" *ngFor="let document of uploads; let index = index">
+          <mat-form-field class="col-12 col-md-6" appearance="outline" [ngClass]="{ translucent: document.busy }">
+            <mat-label>Name</mat-label>
+            <input matInput [value]="document.name" readonly>
+          </mat-form-field>
+
+          <mat-form-field class="col-12 col-md flex-md-grow-1" appearance="outline"
+            [ngClass]="{ translucent: document.busy }">
+            <mat-label>Description</mat-label>
+            <input matInput [(ngModel)]="document.description" [readonly]="viewOnly" maxlength="255">
+          </mat-form-field>
+
+          <div class="col-12 col-md-auto pl-0 d-flex justify-content-end" [ngClass]="{ translucent: document.busy }">
+            <button mat-mini-fab color="primary" class="mt-0 mb-2 mt-md-2 ml-1" type="button" *ngIf="!document.file"
+              matTooltip="Download file" (click)="onDownloadDocument(document)">
+              <mat-icon>download</mat-icon>
+            </button>
+            <button mat-mini-fab color="warn" class="mt-0 mb-2 mt-md-2 ml-1" type="button" matTooltip="Delete file"
+              (click)="onRemoveDocument(document)" *ngIf="!viewOnly">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <div *ngIf="document.busy"
+            class="progress-bar-container d-flex align-items-center justify-content-center p-3">
+            <mat-progress-bar
+              [mode]="document.progress === 0 ? 'query' : (document.progress === 100 ? 'indeterminate' : 'determinate')"
+              [value]="document.progress">
+            </mat-progress-bar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row-reverse mt-2" *ngIf="!viewOnly">
+      <div class="d-flex flex-row align-items-center">
+        <ng-container *ngIf="!uploads || !uploads.length">
+          <span>Click here to select a file</span>
+          <mat-icon class="mr-2">arrow_right_alt</mat-icon>
+        </ng-container>
+
+        <input type="file" class="sr-only" [accept]="accept" (change)="onFileSelected($event)" multiple="true"
+          #fileSelector>
+
+        <button mat-fab color="warn" type="button" matTooltip="Add another" (click)="onAddDocument()">
+          <mat-icon>attachment</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spinner-container" *ngIf="busy">
+  <app-spinner [show]="busy"></app-spinner>
+</div>
+
+<ng-template #downloadDialogTemplate>
+  <h3 mat-dialog-title>
+    Downloading
+  </h3>
+  <div mat-dialog-content>
+    <p>
+      {{ downloadFileName }}
+      <ng-container *ngIf="!!downloadFileSize">- {{ downloadFileSize }}</ng-container>
+    </p>
+    <mat-progress-bar class="mb-3" [mode]="downloadProgress === 0 ? 'query' : 'determinate'" [value]="downloadProgress">
+    </mat-progress-bar>
+  </div>
+  <div mat-dialog-actions class="pb-4 justify-content-end">
+    <button mat-flat-button type="button" [mat-dialog-close]="false" color="warn">Cancel</button>
+  </div>
+</ng-template>

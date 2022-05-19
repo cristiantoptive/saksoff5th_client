@@ -74,6 +74,10 @@
     <mat-error>This field is required.</mat-error>
   </mat-form-field>
 
+  <div class="col-12">
+    <app-uploads [viewOnly]="false" title="Product images" [uploads]="uploads"></app-uploads>
+  </div>
+
   <div class="col-12 d-flex justify-content-end">
     <button type="button" mat-raised-button color="warn" class="mr-1" (click)="doCancel()">
       Cancel

@@ -37,6 +37,7 @@
     "http-proxy": "^1.18.1",
     "material-community-components": "^10.0.0",
     "moment": "^2.29.3",
+    "numeral": "^2.0.6",
     "path": "^0.12.7",
     "query-string": "^7.0.0",
     "rxjs": "~6.5.4",
