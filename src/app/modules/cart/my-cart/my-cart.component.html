@@ -1,0 +1,94 @@
+<div class="d-flex flex-column flex-fill">
+  <div class="row mb-2">
+    <div class="col d-flex justify-content-end">
+      <button mat-fab color="primary" (click)="onAdd()" matTooltip="Add more products">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="bordered-container position-relative flex-fill d-flex flex-column justify-content-between" [style]="'height: 0px;'">
+    <div class="table-container full-size" #tableContainer>
+      <table class="w-100" mat-table [dataSource]="products">
+        <!-- title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let element" class="text-capitalize">{{ element.title }}</td>
+        </ng-container>
+
+        <!-- deliveryTime Column -->
+        <ng-container matColumnDef="deliveryTime">
+          <th mat-header-cell *matHeaderCellDef>Delivery Time</th>
+          <td mat-cell *matCellDef="let element">{{ element.deliveryTime }}</td>
+        </ng-container>
+
+        <!-- price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
+        </ng-container>
+
+        <!-- quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="decreaseQuantity(element)">
+              <mat-icon>remove</mat-icon>
+            </button>
+            {{ element.quantity }}
+            <button mat-icon-button (click)="increaseQuantity(element)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- total Column -->
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let element">{{ element.price * element.quantity | currency }}</td>
+        </ng-container>
+
+        <!-- Actions column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="text-right">Actions</th>
+          <td mat-cell *matCellDef="let element" class="action-cell text-right text-nowrap">
+            <button mat-mini-fab color="warn" matTooltip="Remove" type="button" (click)="onDelete(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div class="pagination-row" *ngIf="showPaginator">
+      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </div>
+    <app-spinner [show]="busy"></app-spinner>
+  </div>
+
+  <div class="bordered-container mt-4 mb-3 p-2 d-flex justify-content-end align-items-center">
+    <div class="d-flex flex-column mr-3" style="width: 120px;">
+      <div class="d-flex flex-row justify-content-between">
+        <span class="font-weight-bold">Subtotal:</span>
+        <span class="text-black-50">{{ cartSubTotal | currency }}</span>
+      </div>
+      <div class="d-flex flex-row justify-content-between">
+        <span class="font-weight-bold">Shipping:</span>
+        <span class="font-italic text-black-50" *ngIf="shippingCost == 0">FREE</span>
+        <span class="text-black-50" *ngIf="shippingCost > 0">{{ shippingCost | currency }}</span>
+      </div>
+      <div class="d-flex flex-row justify-content-between">
+        <span class="font-weight-bold">TOTAL:</span>
+        <span>{{ cartTotal | currency }}</span>
+      </div>
+    </div>
+    <div class="ml-3 pr-2">
+      <button class="py-3 px-4" mat-raised-button color="warn" (click)="confirmPurchase()">
+        <mat-icon>shopping_bag</mat-icon>
+        <span class="d-inline-block mt-1 ml-2">BUY</span>
+      </button>
+    </div>
+  </div>
+</div>

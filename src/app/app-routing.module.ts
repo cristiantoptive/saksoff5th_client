@@ -1,25 +1,112 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AuthenticationGuard, AuthenticationModes } from "./infrastructure/services/authentication/authentication.guard";
+import { Roles } from "@app/infrastructure/interfaces/users";
+import { AuthenticationGuard, AuthenticationModes } from "@app/infrastructure/services/authentication/authentication.guard";
+import { DashboardComponent } from "@app/shared/components/dashboard/dashboard.component";
 
 const routes: Routes = [
   {
     path: "",
     canActivate: [AuthenticationGuard],
     data: {
-      authMode: AuthenticationModes.NOT_LOGGED_IN,
+      authMode: AuthenticationModes.ANY,
       reuse: false,
     },
-    loadChildren: () => import("./public/public.module").then(m => m.PublicModule),
+    component: DashboardComponent,
+    children: [
+      {
+        path: "vendors",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Merchandiser],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/vendors/vendors.module").then(m => m.VendorsModule),
+      },
+      {
+        path: "products",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Merchandiser],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/products/products.module").then(m => m.ProductsModule),
+      },
+      {
+        path: "categories",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Admin],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/categories/categories.module").then(m => m.CategoriesModule),
+      },
+      {
+        path: "users",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Admin],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/users/users.module").then(m => m.UsersModule),
+      },
+      {
+        path: "addresses",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/addresses/addresses.module").then(m => m.AddressesModule),
+      },
+      {
+        path: "cards",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/cards/cards.module").then(m => m.CardsModule),
+      },
+      {
+        path: "cart",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.ANY,
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/cart/cart.module").then(m => m.CartModule),
+      },
+      {
+        path: "orders",
+        canActivate: [AuthenticationGuard],
+        data: {
+          authMode: AuthenticationModes.LOGGED_IN,
+          authRoles: [Roles.Admin, Roles.Merchandiser, Roles.Customer],
+          reuse: false,
+        },
+        loadChildren: () => import("./modules/orders/orders.module").then(m => m.OrdersModule),
+      },
+      {
+        path: "",
+        loadChildren: () => import("./modules/catalog/catalog.module").then(m => m.CatalogModule),
+      },
+    ],
   },
   {
-    path: "dashboard",
+    path: "auth",
     canActivate: [AuthenticationGuard],
     data: {
-      authMode: AuthenticationModes.LOGGED_IN,
+      authMode: AuthenticationModes.ANY,
       reuse: false,
     },
-    loadChildren: () => import("./private/private.module").then(m => m.PrivateModule),
+    loadChildren: () => import("./modules/auth/auth.module").then(m => m.AuthModule),
   },
 ];
 

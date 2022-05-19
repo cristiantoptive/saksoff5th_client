@@ -119,3 +119,14 @@ html {
 .mat-datepicker-content .mat-calendar {
   height: auto !important;
 }
+
+.products-catalog {
+  .mat-card-header-text {
+    width: 100%;
+  }
+}
+
+.carousel-indicators {
+  transform: none !important;
+  left: 0 !important;
+}

@@ -1,0 +1,83 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div class="d-block d-md-none">
+      <button mat-icon-button (click)="toggleSidenav.emit()" class="d-block d-md-none">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="menu-spacer"></span>
+    </div>
+
+    <div class="d-none d-md-block">
+      <a routerLink="/">
+        <img src="assets/saksoff_5th_logo.png" class="header-brand-image">
+      </a>
+    </div>
+
+    <div class="d-flex justify-content-center w-100 px-3">
+      <div class="d-none d-md-block">
+        <a *ngFor="let menu of menues"
+          [routerLink]="menu.link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: menu.exact }"
+          mat-flat-button
+          class="header-link"
+        >
+          {{ menu.text }}
+          <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+          <span *ngIf="menu.isCart && cartItemsCount > 0" [matBadge]="cartItemsCount" matBadgeColor="warn" [matBadgeOverlap]="true"></span>
+        </a>
+      </div>
+
+      <div class="d-block d-md-none">
+        <a *ngFor="let menu of menues"
+          [routerLink]="menu.link"
+          routerLinkActive="d-block"
+          [routerLinkActiveOptions]="{ exact: menu.exact }"
+          mat-flat-button
+          class="header-link d-none"
+        >
+          {{ menu.text }}
+          <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+          <span *ngIf="menu.isCart && cartItemsCount > 0" [matBadge]="cartItemsCount" matBadgeColor="warn" [matBadgeOverlap]="true"></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end header-right-spacer">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="about()">
+          <mat-icon>info</mat-icon>
+          <span>App Info</span>
+        </button>
+        <button mat-menu-item (click)="logout()" *ngIf="user && user.id">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+        <button mat-menu-item (click)="login()" *ngIf="!user || !user.id">
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<ng-template #popupRef>
+  <h3 mat-dialog-title>
+    App Info
+  </h3>
+  <mat-dialog-content>
+    <p>Version: {{ version }}</p>
+    <p>Build date: {{ buildNumber }} </p>
+    <label>Change history:</label>
+    <ul>
+      <li>Initial release. <small>(2022/04/22)</small></li>
+    </ul>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button type="button" [mat-dialog-close]="false" color="primary">Close</button>
+  </mat-dialog-actions>
+</ng-template>

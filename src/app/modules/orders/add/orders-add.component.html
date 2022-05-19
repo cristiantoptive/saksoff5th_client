@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="text-primary font-weight-normal mb-2">Order Items</h2>
+  </div>
+</div>
+
+<div class="d-flex flex-column">
+  <div class="bordered-container position-relative d-flex flex-column justify-content-between">
+    <div class="table-container" #tableContainer>
+      <table class="w-100" mat-table [dataSource]="products">
+        <!-- title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let element" class="text-capitalize">{{ element.title }}</td>
+          <td mat-footer-cell *matFooterCellDef colspan="3" style="border-bottom: none;"></td>
+        </ng-container>
+
+        <!-- deliveryTime Column -->
+        <ng-container matColumnDef="deliveryTime">
+          <th mat-header-cell *matHeaderCellDef>Delivery Time</th>
+          <td mat-cell *matCellDef="let element">{{ element.deliveryTime }}</td>
+        </ng-container>
+
+        <!-- price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
+        </ng-container>
+
+        <!-- quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.quantity }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef style="border-bottom: none;"><i>{{ cartTotalItems }}</i></td>
+        </ng-container>
+
+        <!-- total Column -->
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef justify="end">Total</th>
+          <td mat-cell *matCellDef="let element">{{ element.price * element.quantity | currency }}</td>
+          <td mat-footer-cell *matFooterCellDef style="border-bottom: none;"><b>{{ cartTotal | currency }}</b></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr mat-footer-row *matFooterRowDef="footerColumns" class="example-first-footer-row"></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <h2 class="text-primary font-weight-normal mb-2">Order Details</h2>
+  </div>
+</div>
+
+<form class="row" [formGroup]="orderForm" (ngSubmit)="doSave()" novalidate #orderFormRef>
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Billing address</mat-label>
+    <mat-select formControlName="billingAddress">
+      <ng-container *ngFor="let address of addresses">
+        <mat-option *ngIf="address.type === 'billing'" [value]="address">{{ address.line1 }} {{ address.line2 }} - {{ address.city }}, {{ address.state }}, {{ address.country }} - {{ address.zipcode }}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Shipping address</mat-label>
+    <mat-select formControlName="shippingAddress">
+      <ng-container *ngFor="let address of addresses">
+        <mat-option *ngIf="address.type === 'shipping'" [value]="address">{{ address.line1 }} {{ address.line2 }} - {{ address.city }}, {{ address.state }}, {{ address.country }} - {{ address.zipcode }}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Payment Card</mat-label>
+    <mat-select formControlName="card">
+      <mat-option *ngFor="let card of cards" [value]="card">{{ card.name }} | {{ card.number }}</mat-option>
+    </mat-select>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>CVV / CVC</mat-label>
+    <input matInput #input placeholder="" formControlName="cvv">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+
+  <div class="col-12 d-flex justify-content-end">
+    <button class="py-2 px-4" mat-raised-button color="warn" type="submit">
+      <mat-icon>shopping_bag</mat-icon>
+      <span class="d-inline-block mt-1 ml-2">PAY & BUY</span>
+    </button>
+  </div>
+</form>
+
+<app-spinner [show]="isBusy"></app-spinner>

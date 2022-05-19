@@ -1,0 +1,41 @@
+<h3 class="text-center">Register a new account</h3>
+<form [formGroup]="signupForm" (ngSubmit)="doSignup()" novalidate>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="Jhon" type="text" formControlName="firstName" required maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Doe" type="text" formControlName="lastName" required maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Email Address</mat-label>
+    <input matInput placeholder="name@domain.com" type="email" formControlName="email" required maxlength="255">
+    <mat-icon matSuffix>alternate_email</mat-icon>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Password</mat-label>
+    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required maxlength="50">
+    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" matTooltip="Show Password"
+      matTooltipPosition="above" [attr.aria-label]="'Show Password'" [attr.aria-pressed]="hidePassword"
+      type="button">
+      <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <div class="d-flex justify-content-between">
+    <span>Already user? <a routerLink="/auth/signin">Login here.</a></span>
+    <button type="submit" mat-raised-button color="primary">
+      <span class="mr-2">Sign-up</span>
+      <mat-icon>how_to_reg</mat-icon>
+    </button>
+  </div>
+</form>
+<app-spinner [show]="busy"></app-spinner>

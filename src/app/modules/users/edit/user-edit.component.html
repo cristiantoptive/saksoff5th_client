@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="text-primary font-weight-normal">Edit User</h2>
+  </div>
+</div>
+
+<form class="row" [formGroup]="userForm" (ngSubmit)="doSave()" novalidate #userFormRef>
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput #input placeholder="" formControlName="email" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Role</mat-label>
+    <mat-select formControlName="role">
+      <mat-option value="admin">
+        Admin
+      </mat-option>
+      <mat-option value="customer">
+        Customer
+      </mat-option>
+      <mat-option value="merchandiser">
+        Merchandiser
+      </mat-option>
+    </mat-select>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>First Name</mat-label>
+    <input matInput #input placeholder="" formControlName="firstName" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Last Name</mat-label>
+    <input matInput #input placeholder="" formControlName="lastName" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Password</mat-label>
+    <input matInput #input placeholder="" formControlName="password" type="password" maxlength="50">
+    <mat-hint>Optional, use this field to change current one</mat-hint>
+  </mat-form-field>
+
+  <div class="col-12 d-flex justify-content-end">
+    <button type="button" mat-raised-button color="warn" class="mr-1" (click)="doCancel()">
+      Cancel
+    </button>
+    <button type="submit" mat-raised-button color="primary" class="ml-1">
+      Save
+    </button>
+  </div>
+</form>
+
+<app-spinner [show]="isBusy"></app-spinner>

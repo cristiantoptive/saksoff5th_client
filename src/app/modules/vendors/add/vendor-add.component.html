@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="text-primary font-weight-normal">Add Vendor</h2>
+  </div>
+</div>
+
+<form class="row" [formGroup]="vendorForm" (ngSubmit)="doSave()" novalidate #vendorFormRef>
+  <mat-form-field class="col-12" appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput #input placeholder="" formControlName="name" maxlength="200">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <div class="col-12 d-flex justify-content-end">
+    <button type="button" mat-raised-button color="warn" class="mr-1" (click)="doCancel()">
+      Cancel
+    </button>
+    <button type="submit" mat-raised-button color="primary" class="ml-1">
+      Save
+    </button>
+  </div>
+</form>
+
+<app-spinner [show]="isBusy"></app-spinner>

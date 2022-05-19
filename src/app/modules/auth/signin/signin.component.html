@@ -1,0 +1,28 @@
+<form [formGroup]="signinForm" (ngSubmit)="doSignin()" novalidate>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Email Address</mat-label>
+    <input matInput placeholder="name@domain.com" type="email" formControlName="email" required maxlength="255">
+    <mat-icon matSuffix>alternate_email</mat-icon>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Password</mat-label>
+    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required maxlength="255">
+    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" matTooltip="Show Password"
+      matTooltipPosition="above" [attr.aria-label]="'Show Password'" [attr.aria-pressed]="hidePassword"
+      type="button">
+      <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <div class="d-flex justify-content-between">
+    <span>New user? <a routerLink="/auth/signup">Register here.</a></span>
+    <button type="submit" mat-raised-button color="primary">
+      <span class="mr-2">Sign-in</span>
+      <mat-icon>login</mat-icon>
+    </button>
+  </div>
+</form>
+<app-spinner [show]="busy"></app-spinner>

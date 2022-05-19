@@ -1,60 +1,34 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, ReplaySubject, of } from "rxjs";
-import { mergeMap, tap } from "rxjs/operators";
-
-import { ChangePasswordCommand, UserViewModel } from "@app/infrastructure/interfaces/users";
-import { AuthenticationService } from "../authentication/authentication.service";
+import { Observable } from "rxjs";
+import { UserViewModel, UserExcerptViewModel, UserCommand } from "@app/infrastructure/interfaces/users";
+import { DeletedViewModel } from "@app/infrastructure/interfaces/shared";
 
 @Injectable({
   providedIn: "root",
 })
 export class UsersService {
-  // Current Authenticated user
-  private currentUserSubject = new ReplaySubject<UserViewModel>(1);
-  private currentUserObservable = this.currentUserSubject.asObservable();
-
   constructor(
     private http: HttpClient,
-    private authService: AuthenticationService,
-  ) {
-    this.authService
-      .isAuthenticated()
-      .pipe(mergeMap(status => status ? this.fetchCurrentUser() : this.clearCurrentUser()))
-      .subscribe();
+  ) { }
+
+  public all(): Observable<UserExcerptViewModel[] | UserViewModel[]> {
+    return this.http.get<UserExcerptViewModel[]>("/users");
   }
 
-  public currentUser(): Observable<UserViewModel> {
-    return this.currentUserObservable;
+  public one(id: string): Observable<UserExcerptViewModel | UserViewModel> {
+    return this.http.get<UserExcerptViewModel>(`/users/${id}`);
   }
 
-  public changePassword(password: ChangePasswordCommand): Observable<UserViewModel> {
-    return this.http.put<UserViewModel>("/users/changePassword", password);
+  public create(command: UserCommand): Observable<UserViewModel> {
+    return this.http.post<UserViewModel>("/users", command);
   }
 
-  private fetchCurrentUser(): Observable<UserViewModel> {
-    return this.http.get<UserViewModel>("/auth/user")
-      .pipe(
-        tap(res => {
-          this.setCurrentUser(res);
-        }),
-      );
+  public update(id: string, command: UserCommand): Observable<UserViewModel> {
+    return this.http.put<UserViewModel>(`/users/${id}`, command);
   }
 
-  private clearCurrentUser(): Observable<UserViewModel> {
-    return of<UserViewModel>({
-      id: undefined,
-      email: undefined,
-      firstName: undefined,
-      lastName: undefined,
-    }).pipe(
-      tap(res => {
-        this.setCurrentUser(res);
-      }),
-    );
-  }
-
-  private setCurrentUser(user: UserViewModel) {
-    this.currentUserSubject.next(user);
+  public delete(id: string): Observable<DeletedViewModel> {
+    return this.http.delete<DeletedViewModel>(`/users/${id}`);
   }
 }

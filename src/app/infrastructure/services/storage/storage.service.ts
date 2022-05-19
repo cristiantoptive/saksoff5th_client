@@ -1,4 +1,6 @@
 import { Injectable } from "@angular/core";
+import { fromEvent, Observable } from "rxjs";
+import { filter, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -57,5 +59,16 @@ export class StorageService {
     } else {
       this.fakedStorage[key] = null;
     }
+  }
+
+  /**
+   * Watch storage changes event
+   */
+  watch(key: string): Observable<{ newValue: string; oldValue: string; }> {
+    return fromEvent<StorageEvent>(window, "storage").pipe(
+      filter(event => event.storageArea === localStorage),
+      filter(event => event.key === key),
+      map(event => ({ newValue: event.newValue, oldValue: event.oldValue })),
+    );
   }
 }

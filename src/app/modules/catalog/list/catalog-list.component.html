@@ -1,0 +1,118 @@
+<div class="mb-1">
+  <div class="d-flex align-items-center justify-content-end py-0">
+    <div class="d-flex flex-row justify-content-end row w-100">
+      <div class="col-12 col-sm-6 col-lg-6">
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: -1.25em">
+          <mat-label>Search</mat-label>
+          <input matInput #input placeholder="" [(ngModel)]="searchText" (ngModelChange)="onSearchTextChange($event)" maxlength="255">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: -1.25em">
+          <mat-label>Category</mat-label>
+          <mat-select [ngModel]="selectedCategory" (selectionChange)="onSearchCategoryChange($event)" multiple>
+            <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <mat-form-field class="w-100" appearance="outline" style="margin-bottom: -1.25em">
+          <mat-label>Vendor</mat-label>
+          <mat-select [ngModel]="selectedVendor" (selectionChange)="onSearchVendorChange($event)" multiple>
+            <mat-option *ngFor="let vendor of vendors" [value]="vendor">{{ vendor.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="ml-1 ml-sm-2 ml-md-3">
+      <button mat-mini-fab color="warn" type="button" (click)="onClearSearch()" matTooltip="Reset search">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="products-catalog row mt-3">
+  <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let product of products">
+    <mat-card>
+      <mat-card-header class="w-100">
+        <mat-card-title class="d-flex justify-content-between">
+          <span>{{ product.title }}</span>
+          <span>{{ product.price | currency }}</span>
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="product.category">{{ product.category.name }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <div mat-card-image [style.height]="'auto'">
+        <mat-carousel
+          timings="250ms ease-in"
+          [autoplay]="true"
+          interval="5000"
+          color="warn"
+          maxWidth="auto"
+          proportion="100"
+          [loop]="false"
+          [hideArrows]="false"
+          [hideIndicators]="false"
+          [useKeyboard]="true"
+          [useMouseWheel]="false"
+          orientation="ltr"
+        >
+          <mat-carousel-slide
+            *ngFor="let image of product.images; let i = index"
+            #matCarouselSlide
+            [image]="getImageUrl(image)"
+            [hideOverlay]="true"
+          ></mat-carousel-slide>
+          <mat-carousel-slide
+            *ngIf="!product.images || !product.images.length"
+            #matCarouselSlide
+            [image]="defaultImage"
+            [hideOverlay]="true"
+          ></mat-carousel-slide>
+        </mat-carousel>
+      </div>
+      <mat-card-content>
+        <div class="d-flex  justify-content-between">
+          <small>Offered by: {{ product.vendor ? product.vendor.name : 'Not provided' }}</small>
+          <small class="text-nowrap">Stock: {{ product.inventory }}</small>
+        </div>
+        <p class="mt-2">
+          {{ product.description ? product.description : 'No description provided.' }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-stroked-button color="primary" (click)="onAddToCart(product)" *ngIf="product.inventory > 0">
+          <mat-icon>add_shopping_cart</mat-icon> Add to cart
+        </button>
+        <button mat-raised-button color="primary" (click)="onBuyProduct(product)" *ngIf="product.inventory > 0">
+          <mat-icon>shopping_cart</mat-icon> Buy
+        </button>
+        <button mat-stroked-button color="primary" *ngIf="product.inventory == 0" disabled>
+          <mat-icon>add_shopping_cart</mat-icon> No more stock
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="col-12" *ngIf="!isBusy && (!products || !products.length)">
+    <mat-card>
+      <mat-card-header class="row">
+        <mat-card-title>
+          No results
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>We can't find any product that matches your requirements</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<app-spinner [show]="isBusy" [fixed]="true"></app-spinner>

@@ -1,16 +1,17 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AuthenticationService } from "@app/infrastructure/services/authentication/authentication.service";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
+import { TOKEN_KEY } from "@app/infrastructure/services/authentication/authentication.service";
+import { StorageService } from "@app/infrastructure/services/storage/storage.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthenticationService) {}
+  constructor(private storageService: StorageService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Get the auth token from the service.
-    const authToken = this.authService.getAuthorizationToken();
+    const authToken = this.storageService.get(TOKEN_KEY);
 
     /*
      * Clone the request and replace the original headers with
@@ -28,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
           if (res instanceof HttpResponse) {
             const updatedToken = res.headers.get("Authorization");
             if (updatedToken) {
-              this.authService.setAuthorizationToken(updatedToken);
+              this.storageService.set(TOKEN_KEY, updatedToken);
             }
           }
         }),

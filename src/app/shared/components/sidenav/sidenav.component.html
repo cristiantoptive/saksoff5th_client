@@ -1,0 +1,30 @@
+<mat-sidenav-container class="full-size">
+  <mat-sidenav class="d-flex flex-column app-sidenav" mode="overlay" #sidenav [autoFocus]="false"
+    [(opened)]="isSidenavOpened">
+    <div class="d-flex flex-column">
+      <mat-toolbar color="primary">
+        <div class="w-100 text-center">
+          <img src="assets/saksoff_5th_logo.png" class="sidenav-brand-image">
+        </div>
+      </mat-toolbar>
+
+      <div class="d-flex flex-column py-3">
+        <a *ngFor="let menu of menues"
+          [routerLink]="menu.link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: menu.exact }"
+          mat-button
+          class="header-link"
+        >
+          {{ menu.text }}
+          <mat-icon *ngIf="menu.icon">{{ menu.icon }}</mat-icon>
+          <span *ngIf="menu.isCart && cartItemsCount > 0" [matBadge]="cartItemsCount" matBadgeColor="warn" [matBadgeOverlap]="true"></span>
+        </a>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="d-flex flex-column full-size">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

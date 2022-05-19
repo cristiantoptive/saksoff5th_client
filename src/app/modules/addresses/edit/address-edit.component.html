@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="text-primary font-weight-normal">Edit Address</h2>
+  </div>
+</div>
+
+<form class="row" [formGroup]="addressForm" (ngSubmit)="doSave()" novalidate #addressFormRef>
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>First Name</mat-label>
+    <input matInput #input placeholder="" formControlName="firstName" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Last Name</mat-label>
+    <input matInput #input placeholder="" formControlName="lastName" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12" appearance="outline">
+    <mat-label>Line 1</mat-label>
+    <input matInput #input placeholder="" formControlName="line1" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Line 2</mat-label>
+    <input matInput #input placeholder="" formControlName="line2" maxlength="255">
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Type</mat-label>
+    <mat-select formControlName="type">
+      <mat-option value="billing">
+        Billing
+      </mat-option>
+      <mat-option value="shipping">
+        Shipping
+      </mat-option>
+    </mat-select>
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>City</mat-label>
+    <input matInput #input placeholder="" formControlName="city" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>State</mat-label>
+    <input matInput #input placeholder="" formControlName="state" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Zipcode</mat-label>
+    <input matInput #input placeholder="" formControlName="zipcode" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-12 col-md-6" appearance="outline">
+    <mat-label>Country</mat-label>
+    <input matInput #input placeholder="" formControlName="country" maxlength="255">
+    <mat-error>This field is required.</mat-error>
+  </mat-form-field>
+
+  <div class="col-12 d-flex justify-content-end">
+    <button type="button" mat-raised-button color="warn" class="mr-1" (click)="doCancel()">
+      Cancel
+    </button>
+    <button type="submit" mat-raised-button color="primary" class="ml-1">
+      Save
+    </button>
+  </div>
+</form>
+
+<app-spinner [show]="isBusy"></app-spinner>

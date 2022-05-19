@@ -7,12 +7,100 @@ import { ActivatedRouteSnapshot, Router } from "@angular/router";
 export class RouterService {
   constructor(private router: Router) { }
 
-  navigateToPublicSection(): void {
+  navigateToMain(): void {
     this.router.navigateByUrl("/");
   }
 
-  navigateToDashboard(): void {
-    this.router.navigateByUrl("/dashboard");
+  navigateToOrders(): void {
+    this.router.navigateByUrl("/orders");
+  }
+
+  navigateToOrderAdd(): void {
+    this.router.navigateByUrl("/orders/add");
+  }
+
+  navigateToCart(): void {
+    this.router.navigateByUrl("/cart");
+  }
+
+  navigateToCards(): void {
+    this.router.navigateByUrl("/cards");
+  }
+
+  navigateToCardAdd(): void {
+    this.router.navigateByUrl("/cards/add");
+  }
+
+  navigateToCardEdit(id: string): void {
+    this.router.navigateByUrl(`/cards/edit/${id}`);
+  }
+
+  navigateToAddresses(): void {
+    this.router.navigateByUrl("/addresses");
+  }
+
+  navigateToAddressAdd(): void {
+    this.router.navigateByUrl("/addresses/add");
+  }
+
+  navigateToAddressEdit(id: string): void {
+    this.router.navigateByUrl(`/addresses/edit/${id}`);
+  }
+
+  navigateToVendors(): void {
+    this.router.navigateByUrl("/vendors");
+  }
+
+  navigateToVendorAdd(): void {
+    this.router.navigateByUrl("/vendors/add");
+  }
+
+  navigateToVendorEdit(id: string): void {
+    this.router.navigateByUrl(`/vendors/edit/${id}`);
+  }
+
+  navigateToProducts(): void {
+    this.router.navigateByUrl("/products");
+  }
+
+  navigateToProductAdd(): void {
+    this.router.navigateByUrl("/products/add");
+  }
+
+  navigateToProductEdit(id: string): void {
+    this.router.navigateByUrl(`/products/edit/${id}`);
+  }
+
+  navigateToUsers(): void {
+    this.router.navigateByUrl("/users");
+  }
+
+  navigateToUserAdd(): void {
+    this.router.navigateByUrl("/users/add");
+  }
+
+  navigateToUserEdit(id: string): void {
+    this.router.navigateByUrl(`/users/edit/${id}`);
+  }
+
+  navigateToCategories(): void {
+    this.router.navigateByUrl("/categories");
+  }
+
+  navigateToCategoryAdd(): void {
+    this.router.navigateByUrl("/categories/add");
+  }
+
+  navigateToCategoryEdit(id: string): void {
+    this.router.navigateByUrl(`/categories/edit/${id}`);
+  }
+
+  navigateToSignin(): void {
+    this.router.navigateByUrl("/auth/signin");
+  }
+
+  navigateToSignup(): void {
+    this.router.navigateByUrl("/auth/signup");
   }
 
   retrieveParamsFromSnapshot(snapshot: ActivatedRouteSnapshot): any {

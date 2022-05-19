@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Subscription } from "rxjs";
-import { debounceTime } from "rxjs/operators";
+import { debounceTime, first, map, mergeMap } from "rxjs/operators";
 
 import { RouterService } from "../router/router.service";
 import { AuthenticationService } from "./authentication.service";
@@ -22,8 +22,10 @@ export class AuthenticationGuard implements CanActivate, OnDestroy {
 
   constructor(private router: Router, private authService: AuthenticationService, private routerService: RouterService) {}
 
+  // maybe this could return an Observable<boolean>
   canActivate(snapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const authMode = snapshot.data.authMode || AuthenticationModes.ANY;
+    const authRoles = snapshot.data.authRoles || [];
 
     // When any kind of authentication is allowed
     if (authMode === AuthenticationModes.ANY) {
@@ -32,13 +34,18 @@ export class AuthenticationGuard implements CanActivate, OnDestroy {
 
     // Watch authenticated status
     this.subscription = this.authService.isAuthenticated()
-      .pipe(debounceTime(350)) // Wait for events propagation
-      .subscribe(authenticated => {
+      .pipe(
+        debounceTime(350),
+        mergeMap(authenticated => this.authService.currentUser().pipe(first(), map(user => ({ user, authenticated })))),
+      ) // Wait for events propagation
+      .subscribe(({ authenticated, user }) => {
         switch (authMode) {
         case AuthenticationModes.LOGGED_IN:
           if (!authenticated) {
             this.urlOnAuthenticated = state.url;
-            this.routerService.navigateToPublicSection();
+            this.routerService.navigateToSignin();
+          } else if (authRoles && authRoles.length && !authRoles.includes(user.role)) {
+            this.routerService.navigateToMain();
           }
 
           break;
@@ -48,7 +55,7 @@ export class AuthenticationGuard implements CanActivate, OnDestroy {
               this.router.navigateByUrl(this.urlOnAuthenticated);
               this.urlOnAuthenticated = null;
             } else {
-              this.routerService.navigateToDashboard();
+              this.routerService.navigateToMain();
             }
           }
 
