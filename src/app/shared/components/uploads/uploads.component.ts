@@ -9,7 +9,7 @@ import * as numeral from "numeral";
 import { UploadViewModel } from "@app/infrastructure/interfaces/uploads";
 import { AlertsService } from "@app/infrastructure/services/alerts/alerts.service";
 import { SnackbarService } from "@app/infrastructure/services/snackbar/snackbar.service";
-import { UploadsService } from "@app/infrastructure/services/uplodas/uploads.service";
+import { UploadsService } from "@app/infrastructure/services/uploads/uploads.service";
 
 const MAXIMUM_FILE_SIZE_IN_BYTES = 10 * 1000 * 1000;
 const ACCEPTED_FILE_TYPES = [
