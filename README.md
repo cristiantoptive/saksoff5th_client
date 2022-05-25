@@ -8,7 +8,7 @@
 ## How to run this project
 
 * install the pre-requisites
-* clone this repository using `git clone https://github.com/tartexs/saksoff5th_client.git` or `git clone git@github.com:tartexs/saksoff5th_client.git`
+* clone this repository using `git clone https://github.com/cristiantoptive/saksoff5th_client.git` or `git clone git@github.com:cristiantoptive/saksoff5th_client.git`
 * install project dependencies using Yarn or NPM by running `npm install` or `yarn install`
 * configure the local proxy for the API server ([HOW TO](#how-to-configure-app-proxy))
 * run the development server by running `npm run dev`
@@ -16,7 +16,7 @@
 
 ## How to configure app proxy
 
-This client depends on [Saksoff5th API](https://github.com/tartexs/saksoff5th_api.git) to work and could be necessary to configure the Angular local proxy to match your API setup host and port on the file `proxy.conf.js` located at the repository root folder.
+This client depends on [Saksoff5th API](https://github.com/cristiantoptive/saksoff5th_api.git) to work and could be necessary to configure the Angular local proxy to match your API setup host and port on the file `proxy.conf.js` located at the repository root folder.
 
 To configure the proxy server change the default value for the const `API_URL` to the URL where the API is running.
 

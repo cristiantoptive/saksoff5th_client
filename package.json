@@ -12,6 +12,10 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "buildnumber": "node update-buildnumber.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cristiantoptive/saksoff5th_client.git"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.1.1",
